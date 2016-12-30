@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#d00718</color>
+    <color name="colorPrimaryDark">#79070b</color>
+    <color name="colorAccent">#477df4</color>
+    <color name="color_title">#bf5809</color>
+    <color name="color_tile_recipe">#bf5809</color>
+    <color name="black_semi_transparent">#b2000000</color>
+    <color name="tag_color">#d64a05</color>
+
+</resources>

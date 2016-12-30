@@ -1,0 +1,33 @@
+<resources>
+    <string name="search">Buscar...</string>
+    <string name="title_activity_login">Identificarse</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Contraseña</string>
+
+    <string name="action_sign">Identificarse</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="recipes">Recetas</string>
+    <string name="new_recipe">Nueva Receta</string>
+    <string name="favorites">Favoritos</string>
+    <string name="app_name">Cocinar es Divertido!</string>
+    <string name="error_field_required">El campo es requerido</string>
+    <string name="error_incorrect_password">La contraseña es incorrecta</string>
+    <string name="error_invalid_email">El email es invalido</string>
+    <string name="error_invalid_password">Esta contraseña es muy corta</string>
+    <string name="elaboration">Elaboración</string>
+    <string name="ingredients">Ingredientes</string>
+    <string name="title_activity_new_recipe">Nueva Rececta</string>
+    <string name="recipe_name">Nombre de la Receta</string>
+    <string name="recipe_time">Tiempo de elaboración</string>
+    <string name="recipe_ingredients">Ingredientes</string>
+    <string name="recipe_elaboration">Elaboración</string>
+    <string name="contact">Contactar</string>
+    <string name="email_subject">Asunto</string>
+    <string name="email_message">Mensage</string>
+    <string name="title_activity_contact">Contactar</string>
+    <string name="email_comment">Tienes alguna sugerencia con el servicio? , ¿alguna duda o reclamación? ponte en contacto con nosotros indicando tu email y te contestaremos lo antes posible.</string>
+</resources>

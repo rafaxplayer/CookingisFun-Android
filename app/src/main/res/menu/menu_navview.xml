@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_recipes"
+            android:icon="@drawable/ic_restaurant_menu_black_24dp"
+            android:title="@string/recipes"/>
+        <item
+            android:id="@+id/menu_new_recipe"
+            android:icon="@drawable/ic_add_circle_black_24dp"
+            android:title="@string/new_recipe"/>
+        <item
+            android:id="@+id/menu_favorites"
+            android:icon="@drawable/ic_star_black_24dp"
+            android:title="@string/favorites"/>
+    </group>
+
+    <item
+        android:id="@+id/navigation_subheader"
+        android:title="Otras Opciones">
+        <menu>
+            <item
+                android:id="@+id/menu_contact"
+                android:icon="@drawable/ic_mail_black_24dp"
+                android:title="@string/contact"/>
+            <item
+                android:id="@+id/menu_opcion_2"
+                android:icon="@drawable/ic_suggestion"
+                android:title="section1"/>
+        </menu>
+    </item>
+</menu>
