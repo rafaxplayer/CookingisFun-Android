@@ -1,5 +1,6 @@
 package rafaxplayer.cookingisfun.activitys;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -26,6 +27,8 @@ public class LoginActivity extends AppCompatActivity  {
     EditText mEmailView;
     @BindView(R.id.password)
     EditText mPasswordView;
+    @BindView(R.id.title_app)
+    TextView mTextTitle;
     @BindView(R.id.sign_in_button)
     Button SignInButton;
 
@@ -36,18 +39,21 @@ public class LoginActivity extends AppCompatActivity  {
 
         ButterKnife.bind(this);
         realm = Realm.getDefaultInstance();
-        // Set up the login form.
+        GlobalUtttilities.hidekeyboard(this);
+        Typeface myTypeface = Typeface.createFromAsset(getAssets(), "fonts/annie.ttf");
+        mTextTitle.setTypeface(myTypeface);
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                if ( id == EditorInfo.IME_ACTION_GO) {
                     attemptLogin();
                     return true;
                 }
                 return false;
             }
         });
+
 
 
         SignInButton.setOnClickListener(new OnClickListener() {

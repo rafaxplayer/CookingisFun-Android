@@ -7,5 +7,5 @@
     <color name="color_tile_recipe">#bf5809</color>
     <color name="black_semi_transparent">#b2000000</color>
     <color name="tag_color">#d64a05</color>
-
+    <color name="menu_text_color">#232323</color>
 </resources>

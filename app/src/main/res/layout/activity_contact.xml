@@ -26,6 +26,7 @@
                 android:elevation="1dp"
                 android:textColor="@android:color/white"
                 android:padding="15dp"
+                android:textSize="@dimen/text_article"
                 style="@style/TextAppearance.AppCompat.Small.Inverse" />
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

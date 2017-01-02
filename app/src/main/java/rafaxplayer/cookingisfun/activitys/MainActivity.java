@@ -248,11 +248,21 @@ public class MainActivity extends AppCompatActivity {
     private void updateprofile(TextView username, CircleImageView img) {
 
         SharedPreferences prefs = GlobalUtttilities.getPrefs(getApplicationContext());
-        if (prefs.getBoolean("login", false)) {
-            //Log.e("rafa", "name 2 : " + prefs.getString("name", "No login"));
+
+
+        useremail.setText(prefs.getString("email", ""));
+        if(GlobalUtttilities.getPrefs(getApplicationContext()).getBoolean("login",false)) {
             username.setText(prefs.getString("name", "No login"));
-            useremail.setText(prefs.getString("email", ""));
-            Picasso.with(getApplicationContext()).load(prefs.getString("avatar", "")).placeholder(R.drawable.user_placeholder).into(img);
+            Picasso.with(getApplicationContext()).load(prefs.getString("avatar", ""))
+                    .error(R.drawable.user_placeholder)
+                    .placeholder(R.drawable.user_placeholder)
+                    .into(img);
+        }else{
+            username.setText("No login");
+            Picasso.with(getApplicationContext()).load(R.drawable.user_placeholder)
+                    .error(R.drawable.user_placeholder)
+                    .placeholder(R.drawable.user_placeholder)
+                    .into(img);
         }
 
     }

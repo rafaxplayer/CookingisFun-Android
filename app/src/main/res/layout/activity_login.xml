@@ -4,13 +4,8 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_margin"
-    android:paddingLeft="@dimen/activity_margin"
-    android:paddingRight="@dimen/activity_margin"
-    android:paddingTop="@dimen/activity_margin"
     tools:context="rafaxplayer.cookingisfun.activitys.LoginActivity"
-    android:layout_margin="@dimen/activity_margin">
-
+    android:background="@color/black_semi_transparent">
 
     <ScrollView
         android:id="@+id/login_form"
@@ -21,26 +16,40 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/login_form_margin"
+            android:layout_marginLeft="@dimen/login_form_margin"
+            android:layout_marginRight="@dimen/login_form_margin"
+            android:layout_marginTop="@dimen/search_view_text_padding"
+            android:padding="@dimen/activity_margin">
+            <TextView
+                android:text="@string/app_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/title_app"
+                android:layout_marginBottom="@dimen/text_title"
+                android:textColor="@android:color/white"
+                android:textAlignment="center"
+                android:textSize="@dimen/fab_margin" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_margin">
                 <EditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
-
-                     />
+                    android:textColor="@android:color/white" />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_margin">
 
                 <EditText
                     android:id="@+id/password"
@@ -49,10 +58,10 @@
                     android:hint="@string/prompt_password"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign"
-                    android:imeOptions="actionUnspecified"
+                    android:imeOptions="actionGo"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:textColor="@android:color/white" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -61,10 +70,9 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/fab_margin"
                 android:text="@string/action_sign"
                 android:textStyle="bold" />
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

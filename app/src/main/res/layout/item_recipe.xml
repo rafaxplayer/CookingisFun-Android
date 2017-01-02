@@ -19,7 +19,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/item_image_height"
             android:id="@+id/imageRecipe"
             android:layout_margin="5dp"
             android:adjustViewBounds="true"

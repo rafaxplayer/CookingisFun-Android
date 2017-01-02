@@ -61,6 +61,7 @@ public class DetailsRecipe extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
         if(toolbar != null){
             setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         favoriteButton.setOnFavoriteChangeListener(

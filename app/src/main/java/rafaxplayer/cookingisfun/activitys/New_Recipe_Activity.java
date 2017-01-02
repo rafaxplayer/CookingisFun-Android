@@ -71,8 +71,9 @@ public class New_Recipe_Activity extends AppCompatActivity implements View.OnCli
         GlobalUtttilities.hidekeyboard(this);
         tagGroup.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
-            public void onTagClick(Tag tag, int position) {
-                Toast.makeText(New_Recipe_Activity.this, tag.text+" : Id="+tag.id, Toast.LENGTH_SHORT).show();
+            public void onTagClick(final Tag tag, final int position) {
+
+
             }
         });
 
@@ -80,7 +81,30 @@ public class New_Recipe_Activity extends AppCompatActivity implements View.OnCli
         tagGroup.setOnTagDeleteListener(new TagView.OnTagDeleteListener() {
             @Override
             public void onTagDeleted(final TagView view, final Tag tag, final int position) {
-                Toast.makeText(New_Recipe_Activity.this, "Tag delete", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(New_Recipe_Activity.this);
+                builder.setTitle("Eliminar categoria");
+                builder.setMessage("Seguro quieres eliminar la categoria "+tag.text+"?");
+                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        tagGroup.remove(position);
+                        int idx = categorias_check.indexOf(tag.id);
+                        categorias_check.remove(idx);
+                        Toast.makeText(New_Recipe_Activity.this, "Eliminada categoria "+tag.text, Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                // Display the alert dialog on interface
+                dialog.show();
+
             }
         });
 
@@ -189,11 +213,11 @@ public class New_Recipe_Activity extends AppCompatActivity implements View.OnCli
 
                 if(categorias_check.size()>0)
                     tagGroup.removeAll();
-                    for(int indx : categorias_check){
-                        Tag tg= new Tag(categories[indx]);
+                    for(int index : categorias_check){
+                        Tag tg= new Tag(categories[index]);
                         tg.layoutColor=getResources().getColor(R.color.tag_color);
                         tg.isDeletable=true;
-                        tg.id=indx;
+                        tg.id=index;
                         tagGroup.addTag(tg);
 
                     }
