@@ -30,7 +30,7 @@
                 android:layout_marginBottom="@dimen/text_title"
                 android:textColor="@android:color/white"
                 android:textAlignment="center"
-                android:textSize="@dimen/fab_margin" />
+                android:textSize="@dimen/title_login" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -70,9 +70,12 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/fab_margin"
+                android:layout_marginTop="@dimen/login_form_margin"
                 android:text="@string/action_sign"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/white"
+                android:padding="@dimen/activity_margin" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -6,14 +6,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     @BindView(R.id.navview)
     NavigationView navView;
+    @BindView(R.id.fab_more)
+    FloatingActionButton fabMore;
 
     private CircleImageView profileImage;
     private TextView username;
@@ -57,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private RecipesAdapter mAdapter;
     private RealmResults<recipe> recipeslist;
 
-    private RecyclerView.LayoutManager mLayoutManager;
+    private StaggeredGridLayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,16 +74,17 @@ public class MainActivity extends AppCompatActivity {
         useremail = (TextView) header.findViewById(R.id.useremail);
         profileImage = (CircleImageView) header.findViewById(R.id.profile_image);
         header_back = (LinearLayout) header.findViewById(R.id.header_back);
-
+        fabMore.hide();
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu_white_24dp);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         realm = Realm.getDefaultInstance();
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new GridLayoutManager(this, 2);
+        //mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         recipeslist = GlobalUtttilities.getAllRecipes(realm);
         recipeslist.addChangeListener(new RealmChangeListener<RealmResults<recipe>>() {
@@ -88,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                 mAdapter.notifyDataSetChanged();
             }
         });
-
 
         showListRecipes(recipeslist);
         header_back.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +122,12 @@ public class MainActivity extends AppCompatActivity {
                     showLogin(MainActivity.this);
 
                 }
+            }
+        });
+        fabMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAdapter.LoadMore();
             }
         });
         Menu men = navView.getMenu();
@@ -233,6 +243,26 @@ public class MainActivity extends AppCompatActivity {
     private void showListRecipes(RealmResults<recipe> recipeslist) {
         mAdapter = new RecipesAdapter(MainActivity.this, recipeslist);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int last = mAdapter.getItemCount()-1;
+                int[] positions = mLayoutManager.findLastVisibleItemPositions(null);
+                fabMore.hide();
+                if(!mAdapter.getAllItemsLoaded()) {
+                    for (int i = 0; i < positions.length; i++) {
+                        //Log.e("rafax",positions[i]+"");
+                        if (positions[i] == last) {
+                            fabMore.show();
+                        }
+                    }
+                }
+
+            }
+
+        });
 
     }
 

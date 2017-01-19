@@ -8,29 +8,47 @@
     android:fitsSystemWindows="true"
     tools:context=".activitys.MainActivity">
 
-    <RelativeLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
+        android:orientation="vertical">
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
             app:theme="@style/CustomActionBar" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/list_recipes"
+        </android.support.design.widget.AppBarLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_more"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="@dimen/activity_margin"
-            android:layout_marginRight="@dimen/activity_margin" />
+            android:layout_height="@dimen/size_fab"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_plus_white_18dp"
+            app:borderWidth="0dp"
+            app:elevation="@dimen/fab_elevation"
+            android:layout_gravity="bottom|right" />
 
-    </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_recipes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/app_bar"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="@dimen/activity_margin"
+                android:layout_marginRight="@dimen/activity_margin"
+                android:layout_marginTop="?actionBarSize"
+                android:paddingTop="@dimen/fab_elevation" />
+
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navview"
@@ -38,7 +56,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:itemTextColor="@color/menu_text_color"
         app:headerLayout="@layout/header_navview"
+        app:itemTextColor="@color/menu_text_color"
         app:menu="@menu/menu_navview" />
 </android.support.v4.widget.DrawerLayout>

@@ -42,6 +42,7 @@ public class GlobalUtttilities {
     public static String urlsharerecipes = "http://www.rafaxplayer.com/cooking-is-fun/recipes/";
     public static String urluser = "http://www.rafaxplayer.com/cooking-is-fun/api/user/";
     public static String urllogin = "http://www.rafaxplayer.com/cooking-is-fun/api/authenticate?";
+
     public static SharedPreferences.Editor editSharePrefs(Context con) {
 
         SharedPreferences.Editor editor = getPrefs(con).edit();
@@ -67,7 +68,7 @@ public class GlobalUtttilities {
                     public void onResponse(JSONObject response) {
                         try {
                             final JSONArray jsonArray = response.getJSONArray("data");
-
+                            Log.e("rafax",jsonArray.toString());
                             realm.executeTransaction(new Realm.Transaction() {
                                 @Override
                                 public void execute(Realm realm) {

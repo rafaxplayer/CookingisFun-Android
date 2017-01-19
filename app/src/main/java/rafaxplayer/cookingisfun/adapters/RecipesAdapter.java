@@ -10,13 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 import rafaxplayer.cookingisfun.R;
 import rafaxplayer.cookingisfun.activitys.DetailsRecipe;
@@ -28,14 +32,19 @@ import rafaxplayer.cookingisfun.models.recipe;
 public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHolder> {
 
     private RealmResults<recipe> mDataset;
+    private List<recipe> dDataset;
     private Context con;
     private Realm realm;
+    public static int MAX_ITEMS = 16;
+    public int currentItems = 0;
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public RecipesAdapter(Context con,RealmResults<recipe> myDataset) {
         this.con = con;
         this.mDataset = myDataset;
+        this.dDataset= new RealmList<>();
         realm = Realm.getDefaultInstance();
+        this.LoadMore();
     }
 
     // Create new views (invoked by the layout manager)
@@ -53,15 +62,15 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.name.setText(mDataset.get(position).getName().toUpperCase());
-        holder.user.setText(mDataset.get(position).getUser().first().getName());
-        holder.time.setText(mDataset.get(position).getElaboration_time());
-        Picasso.with(con).load(mDataset.get(position).getImg()).placeholder(R.drawable.recipe_placeholder)
+        holder.name.setText(dDataset.get(position).getName().toUpperCase());
+        holder.user.setText(dDataset.get(position).getUser().first().getName());
+        holder.time.setText(dDataset.get(position).getElaboration_time());
+        Picasso.with(con).load(dDataset.get(position).getImg()).fit().placeholder(R.drawable.recipe_placeholder)
                 .error(R.drawable.recipe_placeholder).into(holder.img);
 
         if(GlobalUtttilities.getPrefs(con).getBoolean("login",false)){
 
-            int recipe_id = mDataset.get(position).getId();
+            int recipe_id = dDataset.get(position).getId();
             int user_id = GlobalUtttilities.getPrefs(con).getInt("id",0);
             holder.favButton.setFavorite(GlobalUtttilities.favoriteExists(realm,user_id,recipe_id),false);
 
@@ -71,13 +80,43 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
 
-        return mDataset.size();
+        return dDataset.size();
     }
 
+    public boolean getAllItemsLoaded(){
+
+        return currentItems >= mDataset.size();
+    }
+
+    public void LoadMore(){
+
+        if(MAX_ITEMS > mDataset.size()-1){
+            dDataset=mDataset;
+            currentItems = mDataset.size();
+            notifyDataSetChanged();
+            return;
+
+        }
+
+        if(getAllItemsLoaded()){
+            Toast.makeText(con, "Limit max items", Toast.LENGTH_SHORT).show();
+        }else{
+            currentItems += MAX_ITEMS;
+            if(getAllItemsLoaded()){
+
+                currentItems = currentItems-MAX_ITEMS;
+
+                currentItems += (mDataset.size()-currentItems) ;
+
+            }
+            dDataset = mDataset.subList(0, currentItems);
+            notifyDataSetChanged();
+
+        }
+    }
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(R.id.imageRecipe)
         ImageView img;
@@ -116,7 +155,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         @Override
         public void onClick(View view) {
             Intent intent= new Intent(con, DetailsRecipe.class);
-            intent.putExtra("recipeid",mDataset.get(ViewHolder.this.getLayoutPosition()).getId());
+            intent.putExtra("recipeid",dDataset.get(ViewHolder.this.getLayoutPosition()).getId());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 ActivityOptions options = ActivityOptions

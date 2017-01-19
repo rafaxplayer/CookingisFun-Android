@@ -14,5 +14,6 @@
     <dimen name="item_image_height">100dp</dimen>
     <dimen name="appbar_details_height">256dp</dimen>
     <dimen name="login_form_margin">30dp</dimen>
+    <dimen name="title_login">30dp</dimen>
 
 </resources>
