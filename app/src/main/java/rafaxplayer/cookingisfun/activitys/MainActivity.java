@@ -18,6 +18,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -149,7 +150,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 if (GlobalUtttilities.isLogin(getApplicationContext())) {
                                     int id = GlobalUtttilities.getPrefs(getApplicationContext()).getInt("id", 0);
-                                    recipeslist = realm.where(recipe.class).equalTo("favs.user_id", id).findAll();
+                                    RealmResults<recipe> favoriteslist = realm.where(recipe.class).equalTo("favs.user_id", id).findAll();
+                                    Log.e("favs",favoriteslist.size()+"");
                                     if (recipeslist.size() > 0) {
                                         showListRecipes(recipeslist);
                                     } else {
@@ -278,8 +280,6 @@ public class MainActivity extends AppCompatActivity {
     private void updateprofile(TextView username, CircleImageView img) {
 
         SharedPreferences prefs = GlobalUtttilities.getPrefs(getApplicationContext());
-
-
         useremail.setText(prefs.getString("email", ""));
         if(GlobalUtttilities.getPrefs(getApplicationContext()).getBoolean("login",false)) {
             username.setText(prefs.getString("name", "No login"));
