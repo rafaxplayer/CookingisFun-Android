@@ -260,6 +260,7 @@ public class GlobalUtttilities {
         ed.apply();
 
     }
+
     public static Boolean favoriteExists(Realm realm,int user_id,int recipe_id){
         favorite fav = realm.where(favorite.class)
                 .equalTo("recipe_id", recipe_id)
