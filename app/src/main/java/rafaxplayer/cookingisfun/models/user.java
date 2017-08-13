@@ -1,17 +1,19 @@
 package rafaxplayer.cookingisfun.models;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by rafax on 23/12/2016.
  */
 
-public class user  extends RealmObject {
+public class user extends RealmObject {
 
-    int id;
-    String name;
-    String email;
-    String avatar;
+    @PrimaryKey
+    private int id;
+    private String name;
+    private String email;
+    private String avatar;
 
     public user() {
     }

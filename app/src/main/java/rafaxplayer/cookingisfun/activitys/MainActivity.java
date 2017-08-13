@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         realm = Realm.getDefaultInstance();
-        //mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         header_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getApplicationContext(),GlobalUtttilities.isLogin(getApplicationContext())+"",Toast.LENGTH_LONG).show();
+
                 Boolean isLogin = GlobalUtttilities.getPrefs(getApplicationContext()).getBoolean("login", false);
                 if (isLogin) {
 
@@ -131,7 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 mAdapter.LoadMore();
             }
         });
+
         Menu men = navView.getMenu();
+
         navView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -140,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
                             case R.id.menu_recipes:
                                 onResume();
+                                Log.e("MENU :","Recipes");
                                 break;
                             case R.id.menu_new_recipe:
                                 if(GlobalUtttilities.isLogin(getApplicationContext())){
@@ -147,19 +149,15 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 break;
                             case R.id.menu_favorites:
-
-                                if (GlobalUtttilities.isLogin(getApplicationContext())) {
-                                    int id = GlobalUtttilities.getPrefs(getApplicationContext()).getInt("id", 0);
-                                    RealmResults<recipe> favoriteslist = realm.where(recipe.class).equalTo("favs.user_id", id).findAll();
-                                    Log.e("favs",favoriteslist.size()+"");
-                                    if (recipeslist.size() > 0) {
-                                        showListRecipes(recipeslist);
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "No tienes recetas en favoritos", Toast.LENGTH_LONG).show();
-                                    }
-
+                                int id = GlobalUtttilities.getPrefs(getApplicationContext()).getInt("id", 0);
+                                RealmResults<recipe> favoriteslist = realm.where(recipe.class)
+                                        .equalTo("favorites.user_id", id).findAll();
+                                Log.e("favs",favoriteslist.size()+"");
+                                if (favoriteslist.size() > 0 ) {
+                                    showListRecipes(favoriteslist);
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "No tienes recetas en favoritos", Toast.LENGTH_LONG).show();
                                 }
-
                                 break;
                             case R.id.menu_contact:
                                 if(GlobalUtttilities.isLogin(getApplicationContext())){
@@ -243,8 +241,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showListRecipes(RealmResults<recipe> recipeslist) {
+
         mAdapter = new RecipesAdapter(MainActivity.this, recipeslist);
         mRecyclerView.setAdapter(mAdapter);
+
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override

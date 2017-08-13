@@ -1,6 +1,8 @@
 package rafaxplayer.cookingisfun.models;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import rafaxplayer.cookingisfun.CookingIsFun;
 
 /**
  * Created by rafax on 24/12/2016.
@@ -8,6 +10,8 @@ import io.realm.RealmObject;
 
 public class favorite extends RealmObject {
 
+    @PrimaryKey
+    private int id;
     private int user_id;
     private int recipe_id;
 
@@ -15,6 +19,8 @@ public class favorite extends RealmObject {
     }
 
     public favorite(int user_id, int recipe_id) {
+
+        this.id= CookingIsFun.FavoriteID.incrementAndGet();
         this.user_id = user_id;
         this.recipe_id = recipe_id;
     }

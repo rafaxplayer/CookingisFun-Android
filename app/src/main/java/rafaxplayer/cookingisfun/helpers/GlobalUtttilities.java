@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
@@ -57,7 +56,7 @@ public class GlobalUtttilities {
         return settings;
     }
 
-    public static void updateRecipes(Context con, final Realm realm) {
+    public static void updateRecipes(final Context con, final Realm realm) {
 
         JsonObjectRequest jsArrayRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -68,16 +67,18 @@ public class GlobalUtttilities {
                     public void onResponse(JSONObject response) {
                         try {
                             final JSONArray jsonArray = response.getJSONArray("data");
-                            Log.e("rafax",jsonArray.toString());
+                            //Log.e("JSON",jsonArray.toString());
                             realm.executeTransaction(new Realm.Transaction() {
                                 @Override
                                 public void execute(Realm realm) {
                                     try {
-                                        if (jsonArray.length() > 0) {
+                                       /* if (jsonArray.length() > 0) {
 
                                             realm.where(recipe.class).findAll().deleteAllFromRealm();
-                                        }
-                                        realm.createAllFromJson(recipe.class, jsonArray.toString());
+                                        }*/
+
+
+                                        realm.createOrUpdateAllFromJson(recipe.class, jsonArray.toString());
 
                                         realm.close();
 
@@ -102,6 +103,8 @@ public class GlobalUtttilities {
         );
 
         MySocialMediaSingleton.getInstance(con).addToRequestQueue(jsArrayRequest);
+
+
     }
 
     public static void updateCategories(Context con, final Realm realm) {
@@ -194,8 +197,9 @@ public class GlobalUtttilities {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        VolleyLog.e(error.getMessage());
+
                         Toast.makeText(con,error.getMessage(),Toast.LENGTH_LONG).show();
+
                     }
                 }
         );
@@ -261,12 +265,12 @@ public class GlobalUtttilities {
 
     }
 
-    public static Boolean favoriteExists(Realm realm,int user_id,int recipe_id){
+    public static Boolean favoriteExists(Realm realm, int user_id, int recipe_id){
         favorite fav = realm.where(favorite.class)
                 .equalTo("recipe_id", recipe_id)
                 .equalTo("user_id",user_id)
                 .findFirst();
-        if(fav!=null){
+        if(fav != null){
             return true;
         }
         return false;
@@ -275,12 +279,14 @@ public class GlobalUtttilities {
     public static void  favoriteCreate(Realm realm ,int user_id,int recipe_id){
 
         if(!favoriteExists(realm,user_id,recipe_id)) {
+
             realm.beginTransaction();
-            favorite fav = new favorite(user_id, recipe_id);
+            final favorite fav = new favorite(user_id, recipe_id);
             realm.copyToRealm(fav);
             recipe rec = realm.where(recipe.class).equalTo("id",recipe_id).findFirst();
             rec.getFavs().add(fav);
             realm.commitTransaction();
+
         }
     }
 

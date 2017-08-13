@@ -4,7 +4,6 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-
 public class recipe extends RealmObject {
 
     @PrimaryKey
@@ -28,7 +27,7 @@ public class recipe extends RealmObject {
 
     private RealmList<user> user;
 
-    private RealmList<favorite> favs;
+    private RealmList<favorite> favorites;
 
     private RealmList<tag> tags;
 
@@ -123,15 +122,15 @@ public class recipe extends RealmObject {
         return user;
     }
 
-    public void setUser(RealmList<user> user) {
+    public void setUser( RealmList<user> user) {
         this.user = user;
     }
 
     public RealmList<favorite> getFavs() {
-        return favs;
+        return favorites;
     }
 
     public void setFavs(RealmList<favorite> favs) {
-        this.favs = favs;
+        this.favorites = favs;
     }
 }

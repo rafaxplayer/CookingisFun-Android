@@ -71,10 +71,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
-
-                    app:mfb_animate_favorite="true"
-                    app:mfb_animate_unfavorite="true"
-
+                    app:mfb_animate_favorite="false"
+                    app:mfb_animate_unfavorite="false"
                     app:mfb_favorite_image="@drawable/favorite_on"
                     app:mfb_not_favorite_image="@drawable/favorite_off_black" />
 

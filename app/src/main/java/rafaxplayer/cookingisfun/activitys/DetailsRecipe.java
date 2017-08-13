@@ -9,10 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.squareup.picasso.Picasso;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -21,6 +19,8 @@ import rafaxplayer.cookingisfun.R;
 import rafaxplayer.cookingisfun.helpers.GlobalUtttilities;
 import rafaxplayer.cookingisfun.models.recipe;
 
+import static rafaxplayer.cookingisfun.R.id.user;
+
 public class DetailsRecipe extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -28,7 +28,7 @@ public class DetailsRecipe extends AppCompatActivity {
     CollapsingToolbarLayout collapser;
     @BindView(R.id.details_profile_image)
     ImageView image_profile;
-    @BindView(R.id.user)
+    @BindView(user)
     TextView textUser;
     @BindView(R.id.time)
     TextView textTime;
@@ -47,6 +47,7 @@ public class DetailsRecipe extends AppCompatActivity {
 
     private Realm realm;
     private recipe rec;
+
     @OnClick(R.id.fab)
     public void sharerecipe() {
         share();

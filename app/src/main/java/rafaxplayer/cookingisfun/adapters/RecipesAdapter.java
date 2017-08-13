@@ -67,9 +67,24 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
         holder.time.setText(dDataset.get(position).getElaboration_time());
         Picasso.with(con).load(dDataset.get(position).getImg()).fit().placeholder(R.drawable.recipe_placeholder)
                 .error(R.drawable.recipe_placeholder).into(holder.img);
+        holder.favButton.setOnFavoriteChangeListener(
+                new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                    @Override
+                    public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean isFavorite) {
+                        int user_id= GlobalUtttilities.getPrefs(con).getInt("id",0);
+                        recipe rec = mDataset.get(position);
+                        if(isFavorite){
 
+                            GlobalUtttilities.favoriteCreate(realm,user_id,rec.getId());
+
+                        }else{
+                            GlobalUtttilities.favoriteDelete(realm,user_id,rec.getId());
+
+                        }
+
+                    }
+                });
         if(GlobalUtttilities.getPrefs(con).getBoolean("login",false)){
-
             int recipe_id = dDataset.get(position).getId();
             int user_id = GlobalUtttilities.getPrefs(con).getInt("id",0);
             holder.favButton.setFavorite(GlobalUtttilities.favoriteExists(realm,user_id,recipe_id),false);
@@ -133,23 +148,7 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipesAdapter.ViewHold
             super(v);
             ButterKnife.bind(this, v);
             v.setOnClickListener(this);
-            this.favButton.setOnFavoriteChangeListener(
-                    new MaterialFavoriteButton.OnFavoriteChangeListener() {
-                        @Override
-                        public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean isFavorite) {
-                            int user_id= GlobalUtttilities.getPrefs(con).getInt("id",0);
-                            recipe rec = mDataset.get(ViewHolder.this.getLayoutPosition());
-                            if(isFavorite){
 
-                                GlobalUtttilities.favoriteCreate(realm,user_id,rec.getId());
-
-                            }else{
-                                GlobalUtttilities.favoriteDelete(realm,user_id,rec.getId());
-
-                            }
-
-                        }
-                    });
         }
 
         @Override

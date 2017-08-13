@@ -6,9 +6,14 @@ import android.app.Application;
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
 import rafaxplayer.cookingisfun.helpers.GlobalUtttilities;
+import rafaxplayer.cookingisfun.models.favorite;
 
 
 /**
@@ -16,6 +21,8 @@ import rafaxplayer.cookingisfun.helpers.GlobalUtttilities;
  */
 
 public class CookingIsFun extends Application {
+
+    public static AtomicInteger FavoriteID = new AtomicInteger();
 
     private Realm realm;
     @Override
@@ -35,6 +42,11 @@ public class CookingIsFun extends Application {
         GlobalUtttilities.updateRecipes(getApplicationContext() ,realm);
         GlobalUtttilities.updateCategories(getApplicationContext() ,realm);
 
+        FavoriteID = setAtomicId(realm, favorite.class);
     }
 
+    private <T extends RealmObject> AtomicInteger setAtomicId(Realm realm, Class<T> anyClass){
+        RealmResults<T> results = realm.where(anyClass).findAll();
+        return (results.size() > 0) ? new AtomicInteger(results.max("id").intValue()) : new AtomicInteger();
+     }
 }
